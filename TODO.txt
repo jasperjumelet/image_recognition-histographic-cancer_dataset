@@ -1,0 +1,13 @@
+1. sort the train_labels in data_preprocessing
+2. append train_label in data_preprocessing
+3. load the dataframe in Convolutional_network.py
+4. make the convolutional layers
+5. make the entire model
+6. make a predict for the model and test its accuracy
+7. optimize the model
+8. make sure the whole project can be easy converted to other environments
+9. make the django website (backend and frontend)
+10. make a database where all the weights are stored
+11. make the file that does the predictions based on the model with its weights(from that database)
+12. secure the server and website and check for vulnerabilities
+13. look for a good way to publicate it
