@@ -1,7 +1,10 @@
 import tensorflow as tf
 from os import listdir
+import os
 import pandas as pd
 import numpy as np
+
+os.environ["CUDA_VISIBLE_DEVICES"]="-1"
 
 filenames = np.array([x for x in listdir('data/train')])
 
@@ -12,6 +15,8 @@ df = df.sort_values(by=['id'])
 df = df.drop(['id'], axis=1)
 labels = df.values
 labels = np.squeeze(labels)
+
+
 
 def parse_function(filename, label):
     image_string = tf.io.read_file(filename)
@@ -36,3 +41,16 @@ def train_preprocess(image, label):
     image = tf.clip_by_value(image, 0.0, 1.0)
 
     return image, label
+
+# here we define the batchsize
+batch_size = 4
+
+# here we create the dataset piping
+dataset = tf.data.Dataset.from_tensor_slices((filenames, labels))
+dataset = dataset.shuffle(len(filenames))
+dataset = dataset.map(parse_function, num_parallel_calls=4)
+dataset = dataset.map(train_preprocess, num_parallel_calls=4)
+dataset = dataset.batch(batch_size)
+dataset = dataset.prefetch(1)
+
+
