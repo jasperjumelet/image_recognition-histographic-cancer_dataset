@@ -41,7 +41,7 @@ def train_preprocess(image, label):
     image = tf.clip_by_value(image, 0.0, 1.0)
 
     return image, label
-
+# hoi
 # here we define the batchsize
 batch_size = 4
 
