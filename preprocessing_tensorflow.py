@@ -19,7 +19,7 @@ labels = np.squeeze(labels)
 
 
 def parse_function(filename, label):
-    image_string = tf.io.read_file(filename)
+    image_string = tf.io.read_file("data/train/" + filename)
 
     # Don't use tf.image.decode_image, or the output shape will be undefined
     # the image decode jpeg need to be fixed 
@@ -41,7 +41,7 @@ def train_preprocess(image, label):
     image = tf.clip_by_value(image, 0.0, 1.0)
 
     return image, label
-# hoi
+
 # here we define the batchsize
 batch_size = 4
 
@@ -53,4 +53,7 @@ dataset = dataset.map(train_preprocess, num_parallel_calls=4)
 dataset = dataset.batch(batch_size)
 dataset = dataset.prefetch(1)
 
+# here we can iterate over it to see the dataset
 
+# for elem in dataset:
+#     print(elem)
