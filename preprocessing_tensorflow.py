@@ -46,12 +46,14 @@ def train_preprocess(image, label):
 batch_size = 4
 
 # here we create the dataset piping
-dataset = tf.data.Dataset.from_tensor_slices((filenames, labels))
-dataset = dataset.shuffle(len(filenames))
-dataset = dataset.map(parse_function, num_parallel_calls=4)
-dataset = dataset.map(train_preprocess, num_parallel_calls=4)
-dataset = dataset.batch(batch_size)
-dataset = dataset.prefetch(1)
+def dataset():
+    dataset = tf.data.Dataset.from_tensor_slices((filenames, labels))
+    dataset = dataset.shuffle(len(filenames))
+    dataset = dataset.map(parse_function, num_parallel_calls=4)
+    dataset = dataset.map(train_preprocess, num_parallel_calls=4)
+    dataset = dataset.batch(batch_size)
+    #dataset = dataset.prefetch(1)
+    return dataset
 
 # here we can iterate over it to see the dataset
 

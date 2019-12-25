@@ -7,8 +7,30 @@ from sklearn.externals import joblib
 import numpy as np
 import pandas as pd
 import os
+import matplotlib.pyplot as plt
 import pickle
+from preprocessing_tensorflow import dataset
 
+train_dataset = dataset()
+
+# for f, j in train_dataset.take(5):
+#     print(f.numpy())
+
+def show_batch(image_batch, label_batch):
+  plt.figure(figsize=(10,10))
+  for n in range(4):
+      ax = plt.subplot(2,2,n+1)
+      plt.imshow(image_batch[n])
+      if label_batch[n] == 1:
+            plt.title("Cancer_cell")
+      else:
+            plt.title("Normal_cell")  
+      plt.axis('off')
+
+features, labels = next(iter(train_dataset))
+show_batch(features.numpy(), labels.numpy())
+plt.show()
+'''
 X_train = joblib.load("X_train.pkl")
 y_train = joblib.load("y_train.pkl")
 X_test = joblib.load("X_test.pkl")
@@ -106,3 +128,4 @@ with open("model.json", "w") as json_file:
 
 
 model.save_weights("trained_weights.h5")
+'''

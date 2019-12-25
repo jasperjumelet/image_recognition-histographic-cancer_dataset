@@ -47,6 +47,7 @@ tuner = RandomSearch(
     directory = LOG_DIR
 )
 
+
 tuner.search(x=X_train,
              y=y_train,
              epochs=1,
