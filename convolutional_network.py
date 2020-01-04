@@ -9,13 +9,48 @@ import pandas as pd
 import os
 import matplotlib.pyplot as plt
 import pickle
-from preprocessing_tensorflow import dataset
+from train_preprocessing_tensorflow import dataset
 
 train_dataset = dataset()
 
-# for f, j in train_dataset.take(5):
-#     print(f.numpy())
+print("the total size = " + str(len(list(train_dataset))))
+DATASET_SIZE = 0
 
+for elem in train_dataset:
+      DATASET_SIZE += 1
+
+x_train = train_dataset.take(int(0.8 * DATASET_SIZE))
+y_train = train_dataset.skip(int(0.8 * DATASET_SIZE))
+print("The splitted size of x_train = " + str(len(list(x_train))))
+print("The splitted size of y_train = " + str(len(list(x_train))))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+'''
 def show_batch(image_batch, label_batch):
   plt.figure(figsize=(10,10))
   for n in range(4):
@@ -30,7 +65,11 @@ def show_batch(image_batch, label_batch):
 features, labels = next(iter(train_dataset))
 show_batch(features.numpy(), labels.numpy())
 plt.show()
-'''
+
+
+
+
+
 X_train = joblib.load("X_train.pkl")
 y_train = joblib.load("y_train.pkl")
 X_test = joblib.load("X_test.pkl")
