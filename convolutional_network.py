@@ -13,7 +13,7 @@ from train_preprocessing_tensorflow import dataset
 
 train_dataset = dataset()
 
-print("the total size = " + str(len(list(train_dataset))))
+# print("the total size = " + str(len(list(train_dataset))))
 DATASET_SIZE = 0
 
 for elem in train_dataset:
@@ -21,8 +21,8 @@ for elem in train_dataset:
 
 x_train = train_dataset.take(int(0.8 * DATASET_SIZE))
 y_train = train_dataset.skip(int(0.8 * DATASET_SIZE))
-print("The splitted size of x_train = " + str(len(list(x_train))))
-print("The splitted size of y_train = " + str(len(list(x_train))))
+#print("The splitted size of x_train = " + str(len(list(x_train))))
+#print("The splitted size of y_train = " + str(len(list(x_train))))
 
 
 
@@ -30,27 +30,6 @@ print("The splitted size of y_train = " + str(len(list(x_train))))
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-'''
 def show_batch(image_batch, label_batch):
   plt.figure(figsize=(10,10))
   for n in range(4):
@@ -69,35 +48,7 @@ plt.show()
 
 
 
-
-X_train = joblib.load("X_train.pkl")
-y_train = joblib.load("y_train.pkl")
-X_test = joblib.load("X_test.pkl")
-y_test = joblib.load("y_test.pkl")
-
-#X_train = np.asarray(X_train)
-print(type(X_train))
-# with open('train.pickle', 'rb') as f:
-#     X_train , y_train = pickle.load(f)
-
-# with open('test.pickle', 'rb') as f:
-#     X_test, y_test = pickle.load(f)
-
-print(X_train[0].shape)
-X_train = X_train.astype('float32')
-X_test = X_test.astype('float32')
-X_train = X_train / 255.0
-X_test = X_test / 255.0
-
-# print(X_train)
-# updated_X_train = np.empty([1,1])
-# X_train =X_train.reshape([1,96, 96,3])
-# updated_X_train = np.append(updated_X_train, X_train)
-# updated_X_train = updated_X_train.reshape([1,96,96,3])
-
-print(X_train)
-
-#print(updated_X_train)
+#
 epochs = 25
 batch_size = 192
 optimizer = 'adam'
@@ -158,7 +109,7 @@ model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['ac
 print(model.summary())
 np.random.seed(seed)
 
-model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=epochs, batch_size=batch_size)
+model.fit(x_train, y_train, epochs=epochs)  #validation_data=(X_test, y_test), batch_size=batch_size
 
 model_json = model.to_json()
 with open("model.json", "w") as json_file:
@@ -167,4 +118,3 @@ with open("model.json", "w") as json_file:
 
 
 model.save_weights("trained_weights.h5")
-'''
